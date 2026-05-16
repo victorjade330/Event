@@ -1,629 +1,274 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>BLOK Capital — Member Card Generator</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap');
-:root{--blue:#1a6fff;--blue2:#3b9bff;--blue-d:#0d4fd4;--ink:#0a1628;--mid:#4a6fa5;--light:#8aa8cc;--pale:#eef4ff;--border:#d5e4f7;--white:#ffffff}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:#f2f6fc;font-family:'Syne',sans-serif;min-height:100vh;color:var(--ink)}
-.app{max-width:960px;margin:0 auto;padding:0 24px 100px}
-header{display:flex;align-items:center;gap:16px;padding:32px 0 28px;border-bottom:1px solid var(--border);margin-bottom:48px}
-.logo-box{width:46px;height:46px;background:linear-gradient(135deg,var(--blue),var(--blue2));border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(26,111,255,.35)}
-.logo-box svg{width:28px;height:28px}
-.hdr-t{flex:1}
-.hdr-n{font-size:16px;font-weight:800;letter-spacing:-.2px}
-.hdr-s{font-size:11px;font-weight:600;color:var(--light);letter-spacing:1.8px;text-transform:uppercase;margin-top:1px}
-.hdr-pill{padding:6px 14px;background:var(--pale);border:1px solid var(--border);border-radius:100px;font-size:11px;font-weight:700;color:var(--blue)}
-.hero{text-align:center;margin-bottom:44px}
-.hero h1{font-size:clamp(28px,5vw,50px);font-weight:800;letter-spacing:-1.5px;line-height:1.05;margin-bottom:10px}
-.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--blue),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{font-size:13px;font-weight:600;color:var(--light)}
-.panel{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:32px;margin-bottom:16px;box-shadow:0 2px 24px rgba(26,111,255,.05)}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-@media(max-width:560px){.g2{grid-template-columns:1fr}}
-.s2{grid-column:1/-1}
-.flabel{font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--light);margin-bottom:7px;display:block}
-.inp{width:100%;background:var(--pale);border:1.5px solid var(--border);border-radius:11px;padding:12px 15px;font-size:15px;font-weight:500;color:var(--ink);font-family:'Syne',sans-serif;outline:none;transition:border-color .18s,box-shadow .18s}
-.inp:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,111,255,.1)}
-.inp::placeholder{color:#b8cfe8;font-weight:400}
-.inp-row{display:flex;gap:10px;align-items:center}
-.inp-wrap{flex:1;display:flex;align-items:center;background:var(--pale);border:1.5px solid var(--border);border-radius:11px;overflow:hidden;transition:border-color .18s,box-shadow .18s}
-.inp-wrap:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,111,255,.1)}
-.at{padding:0 4px 0 13px;font-size:17px;font-weight:700;color:var(--blue);opacity:.6;user-select:none}
-.inp-wrap input{flex:1;background:transparent;border:none;outline:none;padding:12px 14px 12px 4px;font-size:15px;font-weight:500;color:var(--ink);font-family:'Syne',sans-serif}
-.inp-wrap input::placeholder{color:#b8cfe8;font-weight:400}
-.sel-wrap{background:var(--pale);border:1.5px solid var(--border);border-radius:11px;overflow:hidden;transition:border-color .18s}
-.sel-wrap:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,111,255,.1)}
-.sel-wrap select{width:100%;background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234a6fa5' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center;border:none;outline:none;padding:12px 36px 12px 15px;font-size:15px;font-weight:500;color:var(--ink);font-family:'Syne',sans-serif;cursor:pointer;appearance:none}
-.gen-btn{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border:none;border-radius:11px;padding:0 24px;height:46px;font-size:14px;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;white-space:nowrap;transition:all .2s;box-shadow:0 4px 16px rgba(26,111,255,.35);flex-shrink:0}
-.gen-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,111,255,.45)}
-.gen-btn:disabled{opacity:.5;cursor:wait}
-/* UPLOAD ZONE */
-.upload-zone{margin-top:14px;border:2px dashed var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .18s;background:var(--pale);position:relative;overflow:hidden}
-.upload-zone:hover,.upload-zone.drag-over{border-color:var(--blue);background:#e8f2ff}
-.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2}
-.upload-icon{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--blue2));display:flex;align-items:center;justify-content:center;flex-shrink:0;pointer-events:none}
-.upload-icon svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.upload-text{flex:1;pointer-events:none}
-.upload-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px}
-.upload-sub{font-size:12px;font-weight:500;color:var(--light)}
-/* PREVIEW STRIP */
-.upload-preview{display:none;align-items:center;gap:12px;margin-top:12px;padding:12px 14px;background:var(--pale);border:1.5px solid var(--border);border-radius:12px}
-.upload-preview.show{display:flex}
-.preview-thumb{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--blue);flex-shrink:0}
-.preview-info{flex:1;min-width:0}
-.preview-name{font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.preview-sub{font-size:11px;color:var(--light);margin-top:1px}
-.preview-clear{background:none;border:none;cursor:pointer;color:var(--light);padding:6px;border-radius:6px;font-size:18px;line-height:1;transition:color .15s;flex-shrink:0}
-.preview-clear:hover{color:#dc2626}
-.id-row{margin-top:18px;padding:11px 16px;background:var(--pale);border:1px dashed var(--border);border-radius:10px;display:flex;justify-content:space-between;align-items:center}
-.id-lbl{font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--light)}
-.id-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--blue);letter-spacing:2px}
-.status{display:none;align-items:center;gap:10px;padding:12px 16px;border-radius:11px;margin-bottom:16px;font-size:13px;font-weight:500;border:1px solid var(--border);background:var(--white);color:var(--blue)}
-.status.show{display:flex}
-.status.err{border-color:#fca5a5;color:#dc2626;background:#fff5f5}
-.status.warn{border-color:#fcd34d;color:#92400e;background:#fffbeb}
-.spin{width:14px;height:14px;border:2px solid #c8dcf7;border-top-color:var(--blue);border-radius:50%;flex-shrink:0;animation:spin .75s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-#preview{display:none}
-#preview.show{display:block;animation:fadeUp .3s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.card-shell{border-radius:20px;overflow:hidden;border:1px solid var(--border);box-shadow:0 12px 60px rgba(26,111,255,.14),0 2px 8px rgba(0,0,0,.05);margin-bottom:18px}
-#card-canvas{width:100%;display:block}
-.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
-.btn-dl{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border:none;border-radius:11px;padding:13px 36px;font-size:14px;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;box-shadow:0 4px 14px rgba(26,111,255,.3);transition:all .2s}
-.btn-dl:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,111,255,.4)}
-.btn-re{background:var(--white);color:var(--blue);border:1.5px solid var(--border);border-radius:11px;padding:13px 26px;font-size:14px;font-weight:600;font-family:'Syne',sans-serif;cursor:pointer;transition:all .2s}
-.btn-re:hover{border-color:var(--blue);background:var(--pale)}
-.hint{font-size:11px;color:var(--light);text-align:center;font-weight:500}
-.ranks-sec{margin-top:48px}
-.ranks-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--light);text-align:center;margin-bottom:14px}
-.rank-pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.rpill{padding:7px 16px;border-radius:100px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);color:var(--mid);background:var(--white);transition:all .15s;font-family:'Syne',sans-serif}
-.rpill:hover,.rpill.on{border-color:var(--rc);color:var(--rc);background:color-mix(in srgb,var(--rc) 8%,white)}
-footer{text-align:center;margin-top:48px;font-size:11px;color:#b0c4d8;font-weight:500;letter-spacing:.5px}
+:root{
+  --blue:#1a6fff;
+  --blue2:#3b9bff;
+  --ink:#0a1628;
+  --border:#d5e4f7;
+  --pale:#eef4ff;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Syne',sans-serif;
+  background:#f2f6fc;
+  color:var(--ink);
+  padding:40px 20px;
+}
+
+.app{
+  max-width:900px;
+  margin:auto;
+}
+
+h1{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.panel{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:24px;
+  margin-top:20px;
+}
+
+label{
+  display:block;
+  margin-bottom:8px;
+  font-size:12px;
+  font-weight:700;
+}
+
+input, select{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--pale);
+  font-family:'Syne',sans-serif;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+@media(max-width:700px){
+  .row{
+    grid-template-columns:1fr;
+  }
+}
+
+button{
+  margin-top:20px;
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  color:#fff;
+  border:none;
+  padding:14px 22px;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+canvas{
+  width:100%;
+  border-radius:20px;
+  margin-top:30px;
+  border:1px solid var(--border);
+}
+
+.small{
+  margin-top:10px;
+  color:#64748b;
+  font-size:13px;
+}
 </style>
 </head>
 <body>
-<div class="app">
-  <header>
-    <div class="logo-box">
-      <svg viewBox="0 0 28 28" fill="none">
-        <rect x="3" y="3" width="13" height="13" rx="3" fill="white" opacity=".95"/>
-        <rect x="6" y="6" width="7" height="7" rx="1.5" fill="white" opacity=".3"/>
-        <path d="M11 7 Q20 7 20 14 Q20 21 13 21 L11 21Z" fill="white" opacity=".9"/>
-        <path d="M14 11 Q18 11 18 14 Q18 17 15 17 L13 17Z" fill="white" opacity=".3"/>
-      </svg>
-    </div>
-    <div class="hdr-t"><div class="hdr-n">BLOK Capital</div><div class="hdr-s">Card Generator</div></div>
-    <div class="hdr-pill">Community Portal</div>
-  </header>
 
-  <div class="hero">
-    <h1>Your <em>BLOK Capital</em><br/>Member Card</h1>
-    <p>Enter your handle and upload your photo — card minted instantly</p>
-  </div>
+<div class="app">
+
+  <h1>BLOK Capital Member Card</h1>
+  <p>Create your community member card instantly.</p>
 
   <div class="panel">
-    <div class="g2">
-      <div class="s2">
-        <label class="flabel">X (Twitter) Handle</label>
-        <div class="inp-row">
-          <div class="inp-wrap">
-            <span class="at">@</span>
-            <input id="inp-handle" type="text" placeholder="yourhandle" autocomplete="off" spellcheck="false"/>
-          </div>
-          <button class="gen-btn" id="gen-btn" onclick="generate()">Generate Card</button>
-        </div>
-      </div>
+
+    <div class="row">
       <div>
-        <label class="flabel">Display Name <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">(optional)</span></label>
-        <input class="inp" id="inp-name" type="text" placeholder="e.g. John Blok"/>
+        <label>X Handle</label>
+        <input id="handle" placeholder="yourhandle" />
       </div>
+
       <div>
-        <label class="flabel">Discord Rank</label>
-        <div class="sel-wrap">
-          <select id="sel-rank" onchange="onRankChange()">
-            <option value="lurker">👁  Lurker</option>
-            <option value="holder" selected>💎  Holder</option>
-            <option value="builder">🔨  Builder</option>
-            <option value="alpha">⚡  Alpha</option>
-            <option value="og">🦉  OG Member</option>
-            <option value="whale">🐋  Whale</option>
-            <option value="council">🔱  Council</option>
-            <option value="core">🛡  Core Team</option>
-          </select>
-        </div>
-      </div>
-      <div class="s2">
-        <label class="flabel">Profile Photo</label>
-        <div class="upload-zone" id="upload-zone">
-          <input type="file" id="file-inp" accept="image/*"/>
-          <div class="upload-icon">
-            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          </div>
-          <div class="upload-text">
-            <div class="upload-title">Upload your profile photo</div>
-            <div class="upload-sub">JPG, PNG, WebP · drag & drop or click to browse</div>
-          </div>
-        </div>
-        <div class="upload-preview" id="upload-preview">
-          <img class="preview-thumb" id="preview-thumb" src="" alt=""/>
-          <div class="preview-info">
-            <div class="preview-name" id="preview-fname">Photo ready</div>
-            <div class="preview-sub">Will be used on your card &nbsp;·&nbsp;
-              <span style="color:var(--blue);cursor:pointer;font-weight:700" id="change-btn">Change photo</span>
-            </div>
-          </div>
-          <button class="preview-clear" id="clear-btn" title="Remove photo">✕</button>
-        </div>
-        <p style="margin-top:8px;font-size:11px;color:var(--light);font-weight:500">
-          💡 X profile auto-fetch may fail due to browser restrictions — uploading directly guarantees your photo appears.
-        </p>
+        <label>Display Name</label>
+        <input id="displayName" placeholder="John Blok" />
       </div>
     </div>
-    <div class="id-row">
-      <span class="id-lbl">Member ID</span>
-      <span class="id-val" id="id-disp">—</span>
+
+    <div class="row" style="margin-top:16px;">
+      <div>
+        <label>Rank</label>
+        <select id="rank">
+          <option value="Holder">Holder</option>
+          <option value="Builder">Builder</option>
+          <option value="Alpha">Alpha</option>
+          <option value="OG">OG</option>
+          <option value="Whale">Whale</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Profile Photo</label>
+        <input type="file" id="photo" accept="image/*" />
+      </div>
     </div>
-  </div>
 
-  <div class="status" id="status">
-    <div class="spin" id="spin"></div>
-    <span id="status-txt"></span>
-  </div>
+    <button id="generateBtn">Generate Card</button>
 
-  <div id="preview">
-    <div class="card-shell"><canvas id="card-canvas"></canvas></div>
-    <div class="actions">
-      <button class="btn-dl" onclick="dlCard()">↓ Download PNG</button>
-      <button class="btn-re" onclick="generate()">↺ Regenerate</button>
+    <div class="small">
+      Works correctly on Vercel deployment.
     </div>
-    <p class="hint" id="dl-hint">1200 × 675 px · Optimised for X / Twitter</p>
+
   </div>
 
-  <div class="ranks-sec">
-    <div class="ranks-title">Discord Server Ranks</div>
-    <div class="rank-pills" id="rank-pills"></div>
-  </div>
-  <footer>©️ 2026 BLOK Capital DAO · blokcapital.io · x.com/blok_cap</footer>
+  <canvas id="card" width="1200" height="675"></canvas>
+
 </div>
+
 <script>
-/* ─── LOGO ─────────────────────────────────────────── */
-const LOGO_SRC = 'data:image/jpeg;base64,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';
-const LOGO_IMG = new Image();
-LOGO_IMG.src = LOGO_SRC;
 
-/* ─── RANKS ─────────────────────────────────────────── */
-const RANKS = {
-lurker:  {label:‘Lurker’,    color:’#64748b’,light:’#f1f5f9’,icon:‘👁’},
-holder:  {label:‘Holder’,    color:’#1a6fff’,light:’#e8f2ff’,icon:‘💎’},
-builder: {label:‘Builder’,   color:’#7c3aed’,light:’#f3eeff’,icon:‘🔨’},
-alpha:   {label:‘Alpha’,     color:’#d97706’,light:’#fffbeb’,icon:‘⚡’},
-og:      {label:‘OG Member’, color:’#059669’,light:’#ecfdf5’,icon:‘🦉’},
-whale:   {label:‘Whale’,     color:’#0891b2’,light:’#ecfeff’,icon:‘🐋’},
-council: {label:‘Council’,   color:’#ea580c’,light:’#fff7ed’,icon:‘🔱’},
-core:    {label:‘Core Team’, color:’#db2777’,light:’#fdf2f8’,icon:‘🛡’},
-};
+const canvas = document.getElementById('card');
+const ctx = canvas.getContext('2d');
 
-/* ─── STATE ─────────────────────────────────────────── */
-const S = {memberId:’—’,username:’’,displayName:’’,rankId:‘holder’,photoImg:null};
+let uploadedImage = null;
 
-/* ─── INIT ──────────────────────────────────────────── */
-window.addEventListener(‘DOMContentLoaded’, function() {
-S.memberId = mkId();
-document.getElementById(‘id-disp’).textContent = S.memberId;
-buildPills();
+document.getElementById('photo').addEventListener('change', (e) => {
+  const file = e.target.files[0];
 
-document.getElementById(‘inp-handle’).addEventListener(‘keydown’, function(e){
-if (e.key === ‘Enter’) generate();
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(event) {
+    const img = new Image();
+
+    img.onload = () => {
+      uploadedImage = img;
+    };
+
+    img.src = event.target.result;
+  };
+
+  reader.readAsDataURL(file);
 });
 
-document.getElementById(‘file-inp’).addEventListener(‘change’, function(e){
-var file = e.target.files[0];
-if (file) processFile(file);
+document.getElementById('generateBtn').addEventListener('click', async () => {
+
+  await document.fonts.ready;
+
+  const handle = document.getElementById('handle').value.trim().replace('@','');
+  const displayName = document.getElementById('displayName').value.trim() || handle;
+  const rank = document.getElementById('rank').value;
+
+  drawCard(displayName, handle, rank);
 });
 
-var zone = document.getElementById(‘upload-zone’);
-zone.addEventListener(‘dragover’, function(e){e.preventDefault();zone.classList.add(‘drag-over’);});
-zone.addEventListener(‘dragleave’, function(){zone.classList.remove(‘drag-over’);});
-zone.addEventListener(‘drop’, function(e){
-e.preventDefault();zone.classList.remove(‘drag-over’);
-var file = e.dataTransfer.files[0];
-if (file && file.type.startsWith(‘image/’)) processFile(file);
-});
+function drawCard(name, handle, rank){
 
-document.getElementById(‘change-btn’).addEventListener(‘click’, function(e){
-e.stopPropagation();
-document.getElementById(‘file-inp’).click();
-});
-document.getElementById(‘clear-btn’).addEventListener(‘click’, function(e){
-e.stopPropagation();
-clearPhoto();
-});
-});
+  ctx.clearRect(0,0,1200,675);
 
-/* ─── BUILD RANK PILLS ──────────────────────────────── */
-function buildPills() {
-var wrap = document.getElementById(‘rank-pills’);
-Object.keys(RANKS).forEach(function(id){
-var r = RANKS[id];
-var b = document.createElement(‘button’);
-b.className = ‘rpill’ + (id === S.rankId ? ’ on’ : ‘’);
-/* FIX 1: was en-dash (–rc) instead of double-dash (–rc) */
-b.style.setProperty(’–rc’, r.color);
-b.textContent = r.icon + ’  ’ + r.label;
-b.addEventListener(‘click’, function(){
-S.rankId = id;
-document.getElementById(‘sel-rank’).value = id;
-document.querySelectorAll(’.rpill’).forEach(function(p){p.classList.remove(‘on’);});
-b.classList.add(‘on’);
-if (S.username) drawCard();
-});
-wrap.appendChild(b);
-});
+  const bg = ctx.createLinearGradient(0,0,1200,675);
+  bg.addColorStop(0,'#0d4fd4');
+  bg.addColorStop(1,'#3b9bff');
+
+  ctx.fillStyle = bg;
+  ctx.fillRect(0,0,1200,675);
+
+  ctx.fillStyle = 'rgba(255,255,255,0.08)';
+
+  for(let i=0;i<60;i++){
+    ctx.beginPath();
+    ctx.arc(
+      Math.random()*1200,
+      Math.random()*675,
+      Math.random()*4,
+      0,
+      Math.PI*2
+    );
+    ctx.fill();
+  }
+
+  ctx.fillStyle = '#fff';
+  ctx.font = '800 52px Syne';
+  ctx.fillText('BLOK Capital', 60, 90);
+
+  ctx.font = '700 22px Syne';
+  ctx.fillText('BLOCKCHAIN ASSET MANAGEMENT', 60, 130);
+
+  ctx.beginPath();
+  ctx.arc(160,330,95,0,Math.PI*2);
+  ctx.fillStyle = '#fff';
+  ctx.fill();
+
+  if(uploadedImage){
+
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.arc(160,330,88,0,Math.PI*2);
+    ctx.clip();
+
+    ctx.drawImage(uploadedImage, 72, 242, 176, 176);
+
+    ctx.restore();
+
+  } else {
+
+    ctx.fillStyle = '#1a6fff';
+    ctx.font = '800 70px Syne';
+    ctx.textAlign = 'center';
+    ctx.fillText(name.charAt(0).toUpperCase(),160,355);
+    ctx.textAlign = 'left';
+  }
+
+  ctx.fillStyle = '#fff';
+
+  ctx.font = '800 64px Syne';
+  ctx.fillText(name, 300, 290);
+
+  ctx.font = '600 28px DM Mono';
+  ctx.fillText('@' + handle, 300, 335);
+
+  ctx.font = '700 24px Syne';
+  ctx.fillText('Rank: ' + rank, 300, 390);
+
+  ctx.font = '600 18px Syne';
+  ctx.fillText('Verified Community Member', 300, 440);
+
+  ctx.fillStyle = 'rgba(255,255,255,0.2)';
+  ctx.fillRect(0,620,1200,55);
+
+  ctx.fillStyle = '#fff';
+  ctx.font = '600 18px Syne';
+  ctx.fillText('blokcapital.io', 50, 655);
 }
 
-function onRankChange() {
-S.rankId = document.getElementById(‘sel-rank’).value;
-var keys = Object.keys(RANKS);
-document.querySelectorAll(’.rpill’).forEach(function(p,i){
-p.classList.toggle(‘on’, keys[i] === S.rankId);
-});
-if (S.username) drawCard();
-}
+drawCard('Member','yourhandle','Holder');
 
-/* ─── PHOTO UPLOAD ──────────────────────────────────── */
-function processFile(file) {
-var reader = new FileReader();
-reader.onerror = function(){ setStatus(‘Could not read image file.’,‘err’); };
-reader.onload = function(ev){
-var dataURL = ev.target.result;
-var img = new Image();
-img.onload = function(){
-S.photoImg = img;
-document.getElementById(‘preview-thumb’).src = dataURL;
-document.getElementById(‘preview-fname’).textContent = file.name;
-document.getElementById(‘upload-zone’).style.display = ‘none’;
-document.getElementById(‘upload-preview’).classList.add(‘show’);
-if (S.username) drawCard();
-};
-img.onerror = function(){ setStatus(‘Image could not be loaded.’,‘err’); };
-img.src = dataURL;
-};
-reader.readAsDataURL(file);
-}
-
-function clearPhoto() {
-S.photoImg = null;
-document.getElementById(‘file-inp’).value = ‘’;
-document.getElementById(‘preview-thumb’).src = ‘’;
-document.getElementById(‘upload-zone’).style.display = ‘’;
-document.getElementById(‘upload-preview’).classList.remove(‘show’);
-if (S.username) drawCard();
-}
-
-/* ─── GENERATE ──────────────────────────────────────── */
-async function generate() {
-var raw = document.getElementById(‘inp-handle’).value.trim();
-/* FIX 2: was broken regex literal — now a proper escaped string */
-raw = raw.replace(/^https?://(www.)?(x|twitter).com//i, ‘’)
-.replace(/^@/, ‘’).replace(/[?/#].*$/, ‘’).trim();
-if (!raw) { setStatus(‘Please enter your X handle first.’,‘err’); return; }
-
-S.username    = raw;
-S.rankId      = document.getElementById(‘sel-rank’).value;
-S.memberId    = mkId();
-S.displayName = document.getElementById(‘inp-name’).value.trim() || raw;
-document.getElementById(‘id-disp’).textContent = S.memberId;
-
-setLoading(true);
-
-if (!S.photoImg) {
-setStatus(‘Trying to fetch @’+raw+’ profile picture…’,‘loading’);
-var fetched = await tryFetchAvatar(raw);
-if (fetched) {
-S.photoImg = fetched;
-document.getElementById(‘preview-thumb’).src = fetched.src;
-document.getElementById(‘preview-fname’).textContent = ‘@’+raw+’ (auto-fetched)’;
-document.getElementById(‘upload-zone’).style.display = ‘none’;
-document.getElementById(‘upload-preview’).classList.add(‘show’);
-clearStatus(2500);
-} else {
-/* FIX 3: warn message now stays for 6 s so users can read it */
-setStatus(‘Auto-fetch failed — card uses initials. Upload your photo above for best results.’,‘warn’);
-clearStatus(6000);
-}
-} else {
-clearStatus(2500);
-}
-
-setLoading(false);
-drawCard();
-var pv = document.getElementById(‘preview’);
-pv.classList.add(‘show’);
-setTimeout(function(){ pv.scrollIntoView({behavior:‘smooth’,block:‘start’}); },80);
-}
-
-/* ─── AUTO-FETCH AVATAR ─────────────────────────────── */
-async function tryFetchAvatar(username) {
-var wsrv = ‘https://wsrv.nl/?w=400&h=400&fit=cover&output=jpg&url=’;
-var sources = [
-wsrv + encodeURIComponent(‘https://unavatar.io/x/’+username),
-wsrv + encodeURIComponent(‘https://unavatar.io/twitter/’+username),
-wsrv + encodeURIComponent(‘https://unavatar.io/’+username),
-];
-for (var i=0; i<sources.length; i++) {
-try {
-var img = await loadCORS(sources[i]);
-if (!img) continue;
-var oc = document.createElement(‘canvas’);
-oc.width = img.naturalWidth || 400;
-oc.height = img.naturalHeight || 400;
-oc.getContext(‘2d’).drawImage(img,0,0);
-var dataURL = oc.toDataURL(‘image/jpeg’,0.92);
-var finalImg = new Image();
-await new Promise(function(res,rej){
-finalImg.onload = res; finalImg.onerror = rej; finalImg.src = dataURL;
-});
-return finalImg;
-} catch(e){}
-}
-return null;
-}
-
-function loadCORS(src) {
-return new Promise(function(res,rej){
-var img = new Image();
-img.crossOrigin = ‘anonymous’;
-var t = setTimeout(function(){rej(new Error(‘timeout’));},8000);
-img.onload  = function(){clearTimeout(t);res(img);};
-img.onerror = function(){clearTimeout(t);rej(new Error(‘error’));};
-img.src = src + ‘&_t=’ + Date.now();
-});
-}
-
-/* ─── DRAW CARD ─────────────────────────────────────── */
-function drawCard() {
-var cv = document.getElementById(‘card-canvas’);
-cv.width = 1200; cv.height = 675;
-renderCard(cv.getContext(‘2d’), 1200, 675, RANKS[S.rankId]);
-}
-
-/* ─── RENDER ────────────────────────────────────────── */
-function renderCard(ctx, W, H, rank) {
-ctx.fillStyle = ‘#ffffff’; ctx.fillRect(0,0,W,H);
-var wash = ctx.createRadialGradient(0,0,0,0,0,800);
-wash.addColorStop(0,‘rgba(26,111,255,0.055)’); wash.addColorStop(1,‘rgba(26,111,255,0)’);
-ctx.fillStyle=wash; ctx.fillRect(0,0,W,H);
-for(var r=0;r<24;r++) for(var c=0;c<40;c++){
-ctx.beginPath();ctx.arc(c*36+(r%2)*18,r*33,1.1,0,Math.PI*2);
-ctx.fillStyle=‘rgba(26,111,255,0.048)’;ctx.fill();
-}
-
-var hG=ctx.createLinearGradient(0,0,W,0);
-hG.addColorStop(0,’#0d4fd4’);hG.addColorStop(.5,’#1a6fff’);hG.addColorStop(1,’#3b9bff’);
-ctx.fillStyle=hG;
-ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(W,0);ctx.lineTo(W,122);
-ctx.bezierCurveTo(W*.74,180,W*.36,208,0,170);ctx.closePath();ctx.fill();
-
-ctx.save();ctx.globalAlpha=.07;
-[85,135,185,235,285].forEach(function(rv){
-ctx.beginPath();ctx.arc(W-55,0,rv,0,Math.PI*2);
-ctx.strokeStyle=’#fff’;ctx.lineWidth=1.5;ctx.stroke();
-});ctx.restore();
-
-if (LOGO_IMG.complete && LOGO_IMG.naturalWidth) {
-var lx=16,ly=8,lsz=76,lr=15;
-ctx.save();
-ctx.beginPath();
-ctx.moveTo(lx+lr,ly);ctx.lineTo(lx+lsz-lr,ly);ctx.quadraticCurveTo(lx+lsz,ly,lx+lsz,ly+lr);
-ctx.lineTo(lx+lsz,ly+lsz-lr);ctx.quadraticCurveTo(lx+lsz,ly+lsz,lx+lsz-lr,ly+lsz);
-ctx.lineTo(lx+lr,ly+lsz);ctx.quadraticCurveTo(lx,ly+lsz,lx,ly+lsz-lr);
-ctx.lineTo(lx,ly+lr);ctx.quadraticCurveTo(lx,ly,lx+lr,ly);ctx.closePath();
-ctx.clip();ctx.drawImage(LOGO_IMG,lx,ly,lsz,lsz);ctx.restore();
-}
-
-ctx.textAlign=‘left’;ctx.textBaseline=‘alphabetic’;
-ctx.fillStyle=‘rgba(255,255,255,0.97)’;
-ctx.font=‘bold 40px Syne,sans-serif’;ctx.fillText(‘BLOK Capital’,104,62);
-ctx.font=‘700 18px Syne,sans-serif’;ctx.fillStyle=‘rgba(255,255,255,0.62)’;
-ctx.fillText(‘BLOCKCHAIN ASSET MANAGEMENT’,104,86);
-
-ctx.font=‘bold 13px Syne,sans-serif’;ctx.textAlign=‘center’;
-var mc=‘MEMBER CARD’,mcW=ctx.measureText(mc).width+32,mcH=32,mcX=W-mcW-36,mcY=22;
-rrect(ctx,mcX,mcY,mcW,mcH,16);ctx.fillStyle=‘rgba(255,255,255,0.15)’;ctx.fill();
-rrect(ctx,mcX,mcY,mcW,mcH,16);ctx.strokeStyle=‘rgba(255,255,255,0.3)’;ctx.lineWidth=1;ctx.stroke();
-ctx.fillStyle=’#fff’;ctx.fillText(mc,mcX+mcW/2,mcY+21);
-
-var rb=rank.icon+’  ’+rank.label.toUpperCase();
-ctx.font=‘bold 13px Syne,sans-serif’;
-var rbW=ctx.measureText(rb).width+28,rbH=32,rbX=W-rbW-36,rbY=mcY+mcH+8;
-rrect(ctx,rbX,rbY,rbW,rbH,16);ctx.fillStyle=‘rgba(255,255,255,0.94)’;ctx.fill();
-ctx.fillStyle=rank.color;ctx.fillText(rb,rbX+rbW/2,rbY+21);
-
-var AX=104,AY=244,AR=88;
-ctx.save();ctx.shadowColor=rank.color;ctx.shadowBlur=22;
-ctx.beginPath();ctx.arc(AX,AY,AR+4,0,Math.PI*2);
-ctx.strokeStyle=‘transparent’;ctx.lineWidth=0;ctx.stroke();ctx.restore();
-ctx.beginPath();ctx.arc(AX,AY,AR+9,0,Math.PI*2);
-ctx.strokeStyle=rank.color+‘44’;ctx.lineWidth=3;ctx.stroke();
-ctx.beginPath();ctx.arc(AX,AY,AR+5,0,Math.PI*2);
-ctx.strokeStyle=’#fff’;ctx.lineWidth=5;ctx.stroke();
-ctx.save();ctx.beginPath();ctx.arc(AX,AY,AR,0,Math.PI*2);ctx.clip();
-if (S.photoImg) {
-var pi=S.photoImg,side=Math.min(pi.naturalWidth,pi.naturalHeight);
-var sx=(pi.naturalWidth-side)/2,sy=(pi.naturalHeight-side)/2;
-ctx.drawImage(pi,sx,sy,side,side,AX-AR,AY-AR,AR*2,AR*2);
-} else {
-var fb=ctx.createLinearGradient(AX-AR,AY-AR,AX+AR,AY+AR);
-fb.addColorStop(0,’#1a6fff’);fb.addColorStop(1,’#3b9bff’);
-ctx.fillStyle=fb;ctx.fillRect(AX-AR,AY-AR,AR*2,AR*2);
-ctx.fillStyle=’#fff’;ctx.font=‘bold 62px Syne,sans-serif’;
-ctx.textAlign=‘center’;ctx.textBaseline=‘middle’;
-ctx.fillText((S.displayName||S.username||’?’)[0].toUpperCase(),AX,AY+2);
-}
-ctx.restore();
-ctx.beginPath();ctx.arc(AX,AY,AR,0,Math.PI*2);
-ctx.strokeStyle=rank.color;ctx.lineWidth=3.5;ctx.stroke();
-var BX=AX+62,BY=AY+65;
-ctx.beginPath();ctx.arc(BX,BY,22,0,Math.PI*2);
-ctx.fillStyle=’#fff’;ctx.fill();ctx.strokeStyle=rank.color;ctx.lineWidth=2.5;ctx.stroke();
-ctx.font=‘16px serif’;ctx.textAlign=‘center’;ctx.textBaseline=‘middle’;
-ctx.fillText(rank.icon,BX,BY+1);
-
-var IX=230;
-ctx.shadowColor=‘rgba(26,111,255,0.12)’;ctx.shadowBlur=12;
-ctx.font=‘800 66px Syne,sans-serif’;ctx.fillStyle=’#0a1628’;
-ctx.textAlign=‘left’;ctx.textBaseline=‘alphabetic’;
-var nameStr=S.displayName||S.username||‘Member’;
-var maxW=W-IX-80;
-while(ctx.measureText(nameStr).width>maxW && nameStr.length>3) nameStr=nameStr.slice(0,-1);
-if((S.displayName||S.username||‘Member’).length>nameStr.length) nameStr+=’…’;
-ctx.fillText(nameStr,IX,216);ctx.shadowBlur=0;
-ctx.font=‘600 22px DM Mono,monospace’;ctx.fillStyle=rank.color;
-ctx.fillText(’@’+S.username,IX,248);
-ctx.fillStyle=’#dde8f5’;ctx.fillRect(IX,264,W-IX-60,1.5);
-
-var stats=[
-{label:‘MEMBER ID’,value:S.memberId},
-{label:‘RANK’,     value:rank.icon+’  ‘+rank.label},
-{label:‘NETWORK’,  value:‘BASE + ETH’},
-{label:‘STATUS’,   value:‘✓  Verified’},
-];
-var SY=300;
-ctx.textBaseline=‘alphabetic’;
-stats.forEach(function(st,i){
-var stx=IX+i*168;
-ctx.font=‘700 13px Syne,sans-serif’;ctx.fillStyle=’#8aa8cc’;ctx.textAlign=‘left’;
-ctx.fillText(st.label,stx,SY);
-ctx.font=‘700 19px Syne,sans-serif’;ctx.fillStyle=’#0a1628’;
-ctx.fillText(st.value,stx,SY+26);
-ctx.fillStyle=’#e8f0fc’;ctx.fillRect(stx,SY+34,148,1.5);
-});
-
-var tY=SY+68;
-ctx.fillStyle=’#e8f0fc’;ctx.fillRect(IX,tY,W-IX-60,1.5);
-ctx.font=‘700 30px Syne,sans-serif’;ctx.textAlign=‘left’;ctx.textBaseline=‘alphabetic’;
-ctx.fillStyle=rank.color;ctx.globalAlpha=0.9;
-ctx.fillText(‘Everyone deserves a garden 🌱’,IX,tY+36);
-ctx.globalAlpha=1;
-ctx.fillStyle=’#e8f0fc’;ctx.fillRect(IX,tY+48,W-IX-60,1.5);
-
-if (LOGO_IMG.complete && LOGO_IMG.naturalWidth) {
-ctx.save();ctx.globalAlpha=0.04;
-ctx.drawImage(LOGO_IMG,W-250,H/2-110,210,210);ctx.restore();
-}
-
-ctx.save();ctx.translate(W-148,H-145);ctx.rotate(-0.32);
-ctx.beginPath();ctx.arc(0,0,64,0,Math.PI*2);
-ctx.fillStyle=rank.light||’#e8f2ff’;ctx.fill();
-ctx.setLineDash([5,3.5]);ctx.strokeStyle=rank.color;ctx.lineWidth=2;
-ctx.beginPath();ctx.arc(0,0,64,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
-ctx.strokeStyle=rank.color+‘40’;ctx.lineWidth=1.5;
-ctx.beginPath();ctx.arc(0,0,54,0,Math.PI*2);ctx.stroke();
-ctx.fillStyle=rank.color;ctx.textAlign=‘center’;ctx.textBaseline=‘middle’;
-ctx.font=‘bold 16px Syne,sans-serif’;ctx.fillText(‘VERIFIED’,0,-18);
-ctx.font=‘bold 22px Syne,sans-serif’;ctx.fillText(‘MEMBER’,0,-1);
-ctx.font=‘bold 13px Syne,sans-serif’;ctx.fillText(‘BLOK CAPITAL’,0,17);
-ctx.strokeStyle=rank.color;ctx.lineWidth=2.5;ctx.lineCap=‘round’;ctx.lineJoin=‘round’;
-ctx.beginPath();ctx.moveTo(-8,33);ctx.lineTo(-2,40);ctx.lineTo(10,27);ctx.stroke();
-ctx.restore();
-
-var barY=H-56;
-var barG=ctx.createLinearGradient(0,barY,W,barY);
-barG.addColorStop(0,’#0d4fd4’);barG.addColorStop(.5,’#1a6fff’);barG.addColorStop(1,’#3b9bff’);
-ctx.fillStyle=barG;ctx.fillRect(0,barY,W,56);
-ctx.textBaseline=‘middle’;
-ctx.font=‘600 20px Syne,sans-serif’;ctx.fillStyle=‘rgba(255,255,255,0.72)’;ctx.textAlign=‘left’;
-ctx.fillText(‘blokcapital.io  ·  x.com/blok_cap  ·  discord.gg/blokcapital’,28,barY+28);
-ctx.textAlign=‘right’;ctx.fillStyle=‘rgba(255,255,255,0.45)’;
-ctx.font=‘700 18px Syne,sans-serif’;
-ctx.fillText(‘BLOCKCHAIN ASSET MANAGEMENT’,W-28,barY+28);
-
-var lL=ctx.createLinearGradient(0,0,0,H);
-lL.addColorStop(0,rank.color+‘ee’);lL.addColorStop(.5,rank.color+‘66’);lL.addColorStop(1,rank.color+‘00’);
-ctx.fillStyle=lL;ctx.fillRect(0,0,4,H);
-
-ctx.save();ctx.translate(17,H/2);ctx.rotate(-Math.PI/2);
-ctx.font=‘400 9px DM Mono,monospace’;ctx.fillStyle=‘rgba(26,111,255,0.14)’;
-ctx.textAlign=‘center’;ctx.textBaseline=‘middle’;
-ctx.fillText(S.memberId+’  ·  BLOK CAPITAL VIP  ·  ’+S.memberId,0,0);ctx.restore();
-}
-
-/* ─── RRECT HELPER ──────────────────────────────────── */
-function rrect(ctx,x,y,w,h,r){
-ctx.beginPath();
-ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
-}
-
-/* ─── DOWNLOAD ──────────────────────────────────────── */
-function dlCard() {
-var filename = ‘blok-capital-’+(S.username||‘member’)+’.png’;
-var oc = document.createElement(‘canvas’);
-oc.width=1200; oc.height=675;
-renderCard(oc.getContext(‘2d’),1200,675,RANKS[S.rankId]);
-var dataURL = oc.toDataURL(‘image/png’);
-showSaveOverlay(dataURL, filename);
-}
-
-function showSaveOverlay(dataURL, filename) {
-var old = document.getElementById(‘save-overlay’);
-if (old) old.remove();
-var overlay = document.createElement(‘div’);
-overlay.id = ‘save-overlay’;
-overlay.style.cssText = ‘position:fixed;inset:0;z-index:9999;background:rgba(5,10,24,0.95);display:flex;flex-direction:column;align-items:center;padding:24px 20px 40px;overflow-y:auto;gap:0’;
-var hdr = document.createElement(‘div’);
-hdr.style.cssText = ‘width:100%;max-width:860px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-shrink:0’;
-var title = document.createElement(‘div’);
-title.style.cssText = ‘font-family:Syne,sans-serif;font-size:15px;font-weight:800;color:#fff’;
-title.textContent = ‘Your BLOK Capital Card’;
-var closeBtn = document.createElement(‘button’);
-closeBtn.textContent = ‘✕  Close’;
-closeBtn.style.cssText = ‘background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);border-radius:8px;padding:8px 16px;cursor:pointer;font-family:Syne,sans-serif;font-size:13px;font-weight:600’;
-closeBtn.onclick = function(){overlay.remove();};
-hdr.appendChild(title); hdr.appendChild(closeBtn);
-var instr = document.createElement(‘div’);
-instr.style.cssText = ‘width:100%;max-width:860px;background:rgba(26,111,255,0.12);border:1px solid rgba(26,111,255,0.3);border-radius:12px;padding:14px 18px;margin-bottom:18px;flex-shrink:0;display:flex;align-items:flex-start;gap:12px’;
-instr.innerHTML = ‘<div style="font-size:22px;line-height:1;flex-shrink:0;margin-top:1px">💾</div><div style="font-family:Syne,sans-serif;font-size:13px;font-weight:600;color:rgba(255,255,255,0.85);line-height:1.7"><strong style="color:#fff;display:block;margin-bottom:2px">Save this image to your device:</strong><span style="color:rgba(255,255,255,0.65)">📱 <strong style="color:rgba(255,255,255,.8)">Mobile:</strong> Long-press image → “Save to Photos”<br>🖥️ <strong style="color:rgba(255,255,255,.8)">Desktop:</strong> Right-click image → “Save image as…”</span></div>’;
-var imgWrap = document.createElement(‘div’);
-imgWrap.style.cssText = ‘width:100%;max-width:860px;border-radius:16px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.7);flex-shrink:0’;
-var img = document.createElement(‘img’);
-img.src = dataURL; img.style.cssText = ‘width:100%;display:block;border-radius:16px’; img.alt = filename;
-imgWrap.appendChild(img);
-overlay.appendChild(hdr); overlay.appendChild(instr); overlay.appendChild(imgWrap);
-document.body.appendChild(overlay);
-overlay.addEventListener(‘click’, function(e){ if(e.target===overlay) overlay.remove(); });
-}
-
-/* ─── UTILS ─────────────────────────────────────────── */
-function mkId() {
-var c=‘ABCDEFGHJKLMNPQRSTUVWXYZ23456789’,id=‘BLOK-’;
-for(var i=0;i<8;i++){if(i===4)id+=’-’;id+=c[Math.floor(Math.random()*c.length)];}
-return id;
-}
-function setLoading(on){
-var btn=document.getElementById(‘gen-btn’);
-btn.disabled=on; btn.textContent=on?‘Loading…’:‘Generate Card’;
-}
-function setStatus(msg,type){
-var el=document.getElementById(‘status’);
-el.className=‘status show’+(type===‘err’?’ err’:type===‘warn’?’ warn’:’’);
-document.getElementById(‘status-txt’).textContent=msg;
-document.getElementById(‘spin’).style.display=(type===‘loading’)?‘block’:‘none’;
-}
-/* FIX 3: clearStatus now accepts an optional delay param (ms) */
-function clearStatus(delay){
-setTimeout(function(){document.getElementById(‘status’).classList.remove(‘show’);}, delay||2500);
-}
 </script>
 
 </body>
